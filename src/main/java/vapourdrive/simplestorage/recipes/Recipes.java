@@ -21,7 +21,10 @@ public class Recipes
 		{
 				"cuc", 'u', SS_Items.upgrade, 'c', "chestWood",
 		}));
-
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SS_Items.chestConverter), new Object[]
+		{
+				"csc", 's', "stickWood", 'c', SS_Items.upgrade
+		}));
 	}
 
 }
