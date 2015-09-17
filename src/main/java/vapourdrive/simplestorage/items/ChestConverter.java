@@ -1,9 +1,5 @@
 package vapourdrive.simplestorage.items;
 
-import org.apache.logging.log4j.Level;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -15,6 +11,8 @@ import vapourdrive.simplestorage.Reference;
 import vapourdrive.simplestorage.SimpleStorage;
 import vapourdrive.simplestorage.blocks.SS_Blocks;
 import vapourdrive.simplestorage.tileentities.TileEntityExpandableChest;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ChestConverter extends Item
 {
@@ -62,10 +60,7 @@ public class ChestConverter extends Item
 			default:
 				expChestMeta = 0;
 		}
-		if (!world.isRemote)
-		{
-			SimpleStorage.log.log(Level.INFO, "Chest meta: " + blockMeta + ", ExpChestMeta: " + expChestMeta);
-		}
+
 		world.setBlock(x, y, z, SS_Blocks.BlockChest, expChestMeta, 3);
         double d2 = (double) x + 0.5D;
         double d3 = (double) z + 0.5D;
