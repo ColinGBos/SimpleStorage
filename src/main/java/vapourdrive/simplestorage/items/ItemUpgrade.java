@@ -17,7 +17,6 @@ public class ItemUpgrade extends Item
 	public ItemUpgrade()
 	{
 		this.setCreativeTab(SimpleStorage.SSTab);
-		this.setMaxStackSize(1);
 		this.setUnlocalizedName("ItemUpgrade");
 	}
 
@@ -52,7 +51,7 @@ public class ItemUpgrade extends Item
 					if (chestStack == null)
 					{
 						chest.setInventorySlotContents(i, new ItemStack(SS_Items.upgrade));
-						player.setCurrentItemOrArmor(0, null);
+						player.inventory.consumeInventoryItem(SS_Items.upgrade);
 				        double d2 = (double) x + 0.5D;
 				        double d3 = (double) z + 0.5D;
 			            world.playSoundEffect(d2, (double) y + 0.5D, d3, "step.wood", 0.4F, world.rand.nextFloat() * 0.2F + 1.0F);

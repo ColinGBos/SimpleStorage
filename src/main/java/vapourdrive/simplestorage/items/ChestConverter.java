@@ -19,7 +19,6 @@ public class ChestConverter extends Item
 	public ChestConverter()
 	{
 		this.setCreativeTab(SimpleStorage.SSTab);
-		this.setMaxStackSize(1);
 		this.setUnlocalizedName("ChestConverter");
 	}
 
@@ -62,6 +61,7 @@ public class ChestConverter extends Item
 		}
 
 		world.setBlock(x, y, z, SS_Blocks.BlockChest, expChestMeta, 3);
+		player.inventory.consumeInventoryItem(SS_Items.chestConverter);
         double d2 = (double) x + 0.5D;
         double d3 = (double) z + 0.5D;
         world.playSoundEffect(d2, (double) y + 0.5D, d3, "step.wood", 0.4F, world.rand.nextFloat() * 0.1F + 0.8F);

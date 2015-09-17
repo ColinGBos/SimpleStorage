@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-0.1.4c.8"
+version = "1.7.10-0.1.4e.10"
 group= "com.vapourdrive.simplestorage" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "simplestorage"
 
