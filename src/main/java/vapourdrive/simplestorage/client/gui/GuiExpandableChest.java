@@ -1,4 +1,4 @@
-package vapourdrive.simplestorage.gui;
+package vapourdrive.simplestorage.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
@@ -50,8 +50,6 @@ public class GuiExpandableChest extends GuiContainer
 		this.searchField.setEnableBackgroundDrawing(false);
 		this.searchField.setVisible(true);
 		this.searchField.setTextColor(16777215);
-		this.searchField.setCanLoseFocus(false);
-		this.searchField.setFocused(true);
 
 	}
 
@@ -69,9 +67,16 @@ public class GuiExpandableChest extends GuiContainer
 	}
 	
 	@Override
-	protected void handleMouseClick(Slot slot, int p_146984_2_, int p_146984_3_, int p_146984_4_)
+    protected void mouseClicked(int posX, int posY, int par3)
+    {
+        super.mouseClicked(posX, posY, par3);
+        this.searchField.mouseClicked(posX, posY, par3);
+    }
+	
+	@Override
+	protected void handleMouseClick(Slot slot, int par2, int par3, int par4)
 	{
-		super.handleMouseClick(slot, p_146984_2_, p_146984_3_, p_146984_4_);
+		super.handleMouseClick(slot, par2, par3, par4);
 
 		this.isSearching = true;
 	}

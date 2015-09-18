@@ -2,7 +2,7 @@ package vapourdrive.simplestorage;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import vapourdrive.simplestorage.gui.GuiExpandableChest;
+import vapourdrive.simplestorage.client.gui.GuiExpandableChest;
 import vapourdrive.simplestorage.inventory.ContainerExpandableChest;
 import vapourdrive.simplestorage.tileentities.TileEntityExpandableChest;
 import cpw.mods.fml.common.network.IGuiHandler;
