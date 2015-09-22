@@ -6,16 +6,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import org.apache.logging.log4j.Level;
-
 import vapourdrive.simplestorage.SimpleStorage;
 import vapourdrive.simplestorage.items.SS_Items;
 import vapourdrive.simplestorage.tileentities.TileEntityExpandableChest;
@@ -55,15 +51,7 @@ public class BlockExpandableChest extends BlockContainer
 
 		if (!player.isSneaking())
 		{
-			if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Items.stick && !world.isRemote)
-			{
-				SimpleStorage.log.log(Level.INFO, chest.getSizeInventory());
-				return true;
-			}
-			else
-			{
-				return handleOpen(world, x, y, z, player);
-			}
+			return handleOpen(world, x, y, z, player);
 		}
 		else
 		{

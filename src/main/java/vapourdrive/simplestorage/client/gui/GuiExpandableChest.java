@@ -234,7 +234,7 @@ public class GuiExpandableChest extends GuiContainer
 	{
 		int i = Mouse.getEventDWheel();
 
-		if (i != 0 && this.isLargeInventory())
+		if (i != 0 && this.isLargeInventory() && (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)))
 		{
 
 			int j = (tile.getSizeInventory() / 9 - 14) + tile.getAddedRows();
@@ -258,7 +258,10 @@ public class GuiExpandableChest extends GuiContainer
 			}
 			scrollTo(currentScroll);
 		}
-		super.handleMouseInput();
+		else
+		{
+			super.handleMouseInput();
+		}
 	}
 
 	public void scrollTo(float currentScroll)
