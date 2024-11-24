@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "open=false": {
+      "model": "simplestorage:block/crate_xl"
+    },
+    "open=true": {
+      "model": "simplestorage:block/crate_xl_open"
+    }
+  }
+}

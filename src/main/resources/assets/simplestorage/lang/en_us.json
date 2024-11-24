@@ -1,0 +1,9 @@
+{
+  "simplestorage.crate": "Storage Crate",
+  "block.simplestorage.crate": "Storage Crate",
+  "item.simplestorage.crate": "Storage Crate",
+  "item.simplestorage.crate_lg": "Large Storage Crate",
+  "item.simplestorage.crate_xl": "Resonant Storage Crate",
+  "block.simplestorage.crate_lg": "Large Storage Crate",
+  "block.simplestorage.crate_xl": "Resonant Storage Crate"
+}
