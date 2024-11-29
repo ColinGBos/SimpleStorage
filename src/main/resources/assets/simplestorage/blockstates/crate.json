@@ -1,10 +1,184 @@
 {
-  "variants": {
-    "open=false": {
-      "model": "simplestorage:block/crate"
-    },
-    "open=true": {
-      "model": "simplestorage:block/crate_open"
+    "variants": {
+        "tier=0,variant=0,open=true": {
+            "model": "simplestorage:block/crate_0_0_open"
+        },
+        "tier=0,variant=1,open=true": {
+            "model": "simplestorage:block/crate_0_1_open"
+        },
+        "tier=0,variant=2,open=true": {
+            "model": "simplestorage:block/crate_0_2_open"
+        },
+        "tier=0,variant=3,open=true": {
+            "model": "simplestorage:block/crate_0_3_open"
+        },
+        "tier=0,variant=4,open=true": {
+            "model": "simplestorage:block/crate_0_4_open"
+        },
+        "tier=0,variant=5,open=true": {
+            "model": "simplestorage:block/crate_0_5_open"
+        },
+        "tier=0,variant=0,open=false": {
+            "model": "simplestorage:block/crate_0_0_closed"
+        },
+        "tier=0,variant=1,open=false": {
+            "model": "simplestorage:block/crate_0_1_closed"
+        },
+        "tier=0,variant=2,open=false": {
+            "model": "simplestorage:block/crate_0_2_closed"
+        },
+        "tier=0,variant=3,open=false": {
+            "model": "simplestorage:block/crate_0_3_closed"
+        },
+        "tier=0,variant=4,open=false": {
+            "model": "simplestorage:block/crate_0_4_closed"
+        },
+        "tier=0,variant=5,open=false": {
+            "model": "simplestorage:block/crate_0_5_closed"
+        },
+        "tier=1,variant=0,open=true": {
+            "model": "simplestorage:block/crate_1_0_open"
+        },
+        "tier=1,variant=1,open=true": {
+            "model": "simplestorage:block/crate_1_1_open"
+        },
+        "tier=1,variant=2,open=true": {
+            "model": "simplestorage:block/crate_1_2_open"
+        },
+        "tier=1,variant=3,open=true": {
+            "model": "simplestorage:block/crate_1_3_open"
+        },
+        "tier=1,variant=4,open=true": {
+            "model": "simplestorage:block/crate_1_4_open"
+        },
+        "tier=1,variant=5,open=true": {
+            "model": "simplestorage:block/crate_1_5_open"
+        },
+        "tier=1,variant=0,open=false": {
+            "model": "simplestorage:block/crate_1_0_closed"
+        },
+        "tier=1,variant=1,open=false": {
+            "model": "simplestorage:block/crate_1_1_closed"
+        },
+        "tier=1,variant=2,open=false": {
+            "model": "simplestorage:block/crate_1_2_closed"
+        },
+        "tier=1,variant=3,open=false": {
+            "model": "simplestorage:block/crate_1_3_closed"
+        },
+        "tier=1,variant=4,open=false": {
+            "model": "simplestorage:block/crate_1_4_closed"
+        },
+        "tier=1,variant=5,open=false": {
+            "model": "simplestorage:block/crate_1_5_closed"
+        },
+        "tier=2,variant=0,open=true": {
+            "model": "simplestorage:block/crate_2_0_open"
+        },
+        "tier=2,variant=1,open=true": {
+            "model": "simplestorage:block/crate_2_1_open"
+        },
+        "tier=2,variant=2,open=true": {
+            "model": "simplestorage:block/crate_2_2_open"
+        },
+        "tier=2,variant=3,open=true": {
+            "model": "simplestorage:block/crate_2_3_open"
+        },
+        "tier=2,variant=4,open=true": {
+            "model": "simplestorage:block/crate_2_4_open"
+        },
+        "tier=2,variant=5,open=true": {
+            "model": "simplestorage:block/crate_2_5_open"
+        },
+        "tier=2,variant=0,open=false": {
+            "model": "simplestorage:block/crate_2_0_closed"
+        },
+        "tier=2,variant=1,open=false": {
+            "model": "simplestorage:block/crate_2_1_closed"
+        },
+        "tier=2,variant=2,open=false": {
+            "model": "simplestorage:block/crate_2_2_closed"
+        },
+        "tier=2,variant=3,open=false": {
+            "model": "simplestorage:block/crate_2_3_closed"
+        },
+        "tier=2,variant=4,open=false": {
+            "model": "simplestorage:block/crate_2_4_closed"
+        },
+        "tier=2,variant=5,open=false": {
+            "model": "simplestorage:block/crate_2_5_closed"
+        },
+        "tier=3,variant=0,open=true": {
+            "model": "simplestorage:block/crate_3_0_open"
+        },
+        "tier=3,variant=1,open=true": {
+            "model": "simplestorage:block/crate_3_1_open"
+        },
+        "tier=3,variant=2,open=true": {
+            "model": "simplestorage:block/crate_3_2_open"
+        },
+        "tier=3,variant=3,open=true": {
+            "model": "simplestorage:block/crate_3_3_open"
+        },
+        "tier=3,variant=4,open=true": {
+            "model": "simplestorage:block/crate_3_4_open"
+        },
+        "tier=3,variant=5,open=true": {
+            "model": "simplestorage:block/crate_3_5_open"
+        },
+        "tier=3,variant=0,open=false": {
+            "model": "simplestorage:block/crate_3_0_closed"
+        },
+        "tier=3,variant=1,open=false": {
+            "model": "simplestorage:block/crate_3_1_closed"
+        },
+        "tier=3,variant=2,open=false": {
+            "model": "simplestorage:block/crate_3_2_closed"
+        },
+        "tier=3,variant=3,open=false": {
+            "model": "simplestorage:block/crate_3_3_closed"
+        },
+        "tier=3,variant=4,open=false": {
+            "model": "simplestorage:block/crate_3_4_closed"
+        },
+        "tier=3,variant=5,open=false": {
+            "model": "simplestorage:block/crate_3_5_closed"
+        },
+        "tier=4,variant=0,open=true": {
+            "model": "simplestorage:block/crate_4_0_open"
+        },
+        "tier=4,variant=1,open=true": {
+            "model": "simplestorage:block/crate_4_1_open"
+        },
+        "tier=4,variant=2,open=true": {
+            "model": "simplestorage:block/crate_4_2_open"
+        },
+        "tier=4,variant=3,open=true": {
+            "model": "simplestorage:block/crate_4_3_open"
+        },
+        "tier=4,variant=4,open=true": {
+            "model": "simplestorage:block/crate_4_4_open"
+        },
+        "tier=4,variant=5,open=true": {
+            "model": "simplestorage:block/crate_4_5_open"
+        },
+        "tier=4,variant=0,open=false": {
+            "model": "simplestorage:block/crate_4_0_closed"
+        },
+        "tier=4,variant=1,open=false": {
+            "model": "simplestorage:block/crate_4_1_closed"
+        },
+        "tier=4,variant=2,open=false": {
+            "model": "simplestorage:block/crate_4_2_closed"
+        },
+        "tier=4,variant=3,open=false": {
+            "model": "simplestorage:block/crate_4_3_closed"
+        },
+        "tier=4,variant=4,open=false": {
+            "model": "simplestorage:block/crate_4_4_closed"
+        },
+        "tier=4,variant=5,open=false": {
+            "model": "simplestorage:block/crate_4_5_closed"
+        }
     }
-  }
 }

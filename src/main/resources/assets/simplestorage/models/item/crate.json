@@ -1,3 +1,215 @@
 {
-  "parent": "simplestorage:block/crate"
+  "parent": "simplestorage:block/crate_0_0_closed",
+  "overrides": [
+    {
+      "predicate": {
+        "simplestorage:tier": 0,
+        "simplestorage:variant": 0
+      },
+      "model": "simplestorage:block/crate_0_0_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 0,
+        "simplestorage:variant": 1
+      },
+      "model": "simplestorage:block/crate_0_1_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 0,
+        "simplestorage:variant": 2
+      },
+      "model": "simplestorage:block/crate_0_2_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 0,
+        "simplestorage:variant": 3
+      },
+      "model": "simplestorage:block/crate_0_3_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 0,
+        "simplestorage:variant": 4
+      },
+      "model": "simplestorage:block/crate_0_4_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 0,
+        "simplestorage:variant": 5
+      },
+      "model": "simplestorage:block/crate_0_5_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 1,
+        "simplestorage:variant": 0
+      },
+      "model": "simplestorage:block/crate_1_0_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 1,
+        "simplestorage:variant": 1
+      },
+      "model": "simplestorage:block/crate_1_1_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 1,
+        "simplestorage:variant": 2
+      },
+      "model": "simplestorage:block/crate_1_2_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 1,
+        "simplestorage:variant": 3
+      },
+      "model": "simplestorage:block/crate_1_3_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 1,
+        "simplestorage:variant": 4
+      },
+      "model": "simplestorage:block/crate_1_4_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 1,
+        "simplestorage:variant": 5
+      },
+      "model": "simplestorage:block/crate_1_5_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 2,
+        "simplestorage:variant": 0
+      },
+      "model": "simplestorage:block/crate_2_0_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 2,
+        "simplestorage:variant": 1
+      },
+      "model": "simplestorage:block/crate_2_1_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 2,
+        "simplestorage:variant": 2
+      },
+      "model": "simplestorage:block/crate_2_2_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 2,
+        "simplestorage:variant": 3
+      },
+      "model": "simplestorage:block/crate_2_3_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 2,
+        "simplestorage:variant": 4
+      },
+      "model": "simplestorage:block/crate_2_4_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 2,
+        "simplestorage:variant": 5
+      },
+      "model": "simplestorage:block/crate_2_5_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 3,
+        "simplestorage:variant": 0
+      },
+      "model": "simplestorage:block/crate_3_0_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 3,
+        "simplestorage:variant": 1
+      },
+      "model": "simplestorage:block/crate_3_1_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 3,
+        "simplestorage:variant": 2
+      },
+      "model": "simplestorage:block/crate_3_2_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 3,
+        "simplestorage:variant": 3
+      },
+      "model": "simplestorage:block/crate_3_3_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 3,
+        "simplestorage:variant": 4
+      },
+      "model": "simplestorage:block/crate_3_4_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 3,
+        "simplestorage:variant": 5
+      },
+      "model": "simplestorage:block/crate_3_5_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 4,
+        "simplestorage:variant": 0
+      },
+      "model": "simplestorage:block/crate_4_0_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 4,
+        "simplestorage:variant": 1
+      },
+      "model": "simplestorage:block/crate_4_1_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 4,
+        "simplestorage:variant": 2
+      },
+      "model": "simplestorage:block/crate_4_2_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 4,
+        "simplestorage:variant": 3
+      },
+      "model": "simplestorage:block/crate_4_3_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 4,
+        "simplestorage:variant": 4
+      },
+      "model": "simplestorage:block/crate_4_4_closed"
+    },
+    {
+      "predicate": {
+        "simplestorage:tier": 4,
+        "simplestorage:variant": 5
+      },
+      "model": "simplestorage:block/crate_4_5_closed"
+    }
+  ]
 }

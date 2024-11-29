@@ -1,7 +1,11 @@
 package vapourdrive.simplestorage.setup;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -14,28 +18,39 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import vapourdrive.simplestorage.content.crate.*;
+import vapourdrive.vapourware.VapourWare;
+import vapourdrive.vapourware.shared.base.BaseInfoItem;
+import vapourdrive.vapourware.shared.utils.DeferredComponent;
 
 import java.util.function.Supplier;
 
 import static vapourdrive.simplestorage.SimpleStorage.MODID;
 
 public class Registration {
+    public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, VapourWare.MODID);
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> TIER_DATA = DATA_COMPONENTS.registerComponentType(
+            "tier", builder -> builder.persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT)
+    );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> VARIANT_DATA = DATA_COMPONENTS.registerComponentType(
+            "variant", builder -> builder.persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT)
+    );
+
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, MODID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, MODID);
     private static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, MODID);
     private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(BuiltInRegistries.MENU, MODID);
 
-    public static final Supplier<Block> CRATE_BLOCK = BLOCKS.register("crate", () -> new CrateBlock(0));
-    public static final Supplier<Block> CRATE_LG_BLOCK = BLOCKS.register("crate_lg", () -> new CrateBlock(1));
-    public static final Supplier<Block> CRATE_XL_BLOCK = BLOCKS.register("crate_xl", () -> new CrateBlock(2));
+    public static final Supplier<Block> CRATE_BLOCK = BLOCKS.register("crate", () -> new CrateBlock());
     public static final Supplier<Item> CRATE_ITEM = ITEMS.register("crate", () -> new CrateItem(CRATE_BLOCK.get(), new Item.Properties()));
-    public static final Supplier<Item> CRATE_LG_ITEM = ITEMS.register("crate_lg", () -> new CrateItem(CRATE_LG_BLOCK.get(), new Item.Properties()));
-    public static final Supplier<Item> CRATE_XL_ITEM = ITEMS.register("crate_xl", () -> new CrateItem(CRATE_XL_BLOCK.get(), new Item.Properties()));
+    public static final Supplier<Item> STORAGE_COMPARTMENT_ITEM = ITEMS.register("storage_compartment",
+            () -> new BaseInfoItem(new Item.Properties(), new DeferredComponent("storage_compartment")));
+
     @SuppressWarnings("all")
     public static final Supplier<BlockEntityType<CrateTile>> CRATE_BLOCK_ENTITY = TILES.register("crate",
-            () -> BlockEntityType.Builder.of(CrateTile::new, CRATE_BLOCK.get(), CRATE_LG_BLOCK.get(), CRATE_XL_BLOCK.get()).build(null));
+            () -> BlockEntityType.Builder.of(CrateTile::new, CRATE_BLOCK.get()).build(null));
 //    @SuppressWarnings("all")
 //    public static final Supplier<BlockEntityType<CrateTile>> CRATE_LG_BLOCK_ENTITY = TILES.register("crate_lg",
 //            () -> BlockEntityType.Builder.of(CrateTile::new, CRATE_LG_BLOCK.get()).build(null));
@@ -60,14 +75,14 @@ public class Registration {
         ITEMS.register(eventBus);
         TILES.register(eventBus);
         MENUS.register(eventBus);
+        DATA_COMPONENTS.register(eventBus);
     }
 
     public static void buildContents(BuildCreativeModeTabContentsEvent event) {
         // Add to ingredients tab
         if (event.getTab() == vapourdrive.vapourware.setup.Registration.VAPOUR_GROUP.get() || event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(CRATE_ITEM.get().getDefaultInstance());
-            event.accept(CRATE_LG_ITEM.get().getDefaultInstance());
-            event.accept(CRATE_XL_ITEM.get().getDefaultInstance());
+            event.accept(STORAGE_COMPARTMENT_ITEM.get().getDefaultInstance());
         }
     }
 

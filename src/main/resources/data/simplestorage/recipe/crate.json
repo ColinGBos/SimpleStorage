@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#R#",
+    "SCS",
+    "#R#"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "R": {
+      "tag": "c:rods/wooden"
+    },
+    "S": {
+      "tag": "c:ingots/copper"
+    },
+    "C": {
+      "item": "simplestorage:storage_compartment"
+    }
+  },
+  "result": {
+    "id": "simplestorage:crate",
+    "count": 1
+  }
+}

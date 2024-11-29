@@ -12,32 +12,31 @@ import java.util.List;
 
 public class CrateScreen extends AbstractBaseContainerScreen<CrateMenu> {
     protected final CrateMenu crateMenu;
-    private static final int[] imgWidths = {175,175,229};
-    private static final int[] imgHeights = {165,221,239};
-    private final int tier;
-    private static final String[] backgrounds = {"crate", "crate_lg", "crate_xl"};
+    private static final int[] imgWidths = {176,176,176,194,230};
+    private static final int[] helpX = {154,154,154,181,217};
+    private static final int[] titleX = {9,9,9,0,0};
+    private static final int[] imgHeights = {175,211,247,247,247};
 
     public CrateScreen(CrateMenu menu, Inventory inv, Component name) {
-        super(menu, inv, name, new DeferredComponent(SimpleStorage.MODID, backgrounds[menu.getTier()]), imgWidths[menu.getTier()]-30, 3, 0);
-        SimpleStorage.debugLog(comp.getMod());
+        super(menu, inv, name, new DeferredComponent(SimpleStorage.MODID, "crate_"+menu.getTier()), helpX[menu.getTier()], -14,244,0, titleX[menu.getTier()], false);
         this.crateMenu = menu;
-        this.tier = menu.getTier();
     }
 
     @Override
     public int getYSize() {
-        return imgHeights[tier];
+        return imgHeights[menu.getTier()];
     }
 
     @Override
     public int getXSize() {
-        return imgWidths[tier];
+        return imgWidths[menu.getTier()];
     }
 
     @Override
     protected void getAdditionalInfoHover(List<Component> hoveringText) {
-        super.getAdditionalInfoHover(hoveringText);
-        hoveringText.add(CompUtils.getComp(comp.getMod(), comp.getTail() + ".wrench").withStyle(ChatFormatting.GOLD));
+        hoveringText.add(CompUtils.getComp("simplestorage", "crate.info"));
+        hoveringText.add(CompUtils.getComp("simplestorage", "crate.wrench").withStyle(ChatFormatting.GOLD));
     }
+
 
 }

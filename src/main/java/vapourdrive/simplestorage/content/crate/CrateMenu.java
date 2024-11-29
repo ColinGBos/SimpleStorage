@@ -1,15 +1,12 @@
 package vapourdrive.simplestorage.content.crate;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
@@ -17,14 +14,12 @@ import vapourdrive.simplestorage.SimpleStorage;
 import vapourdrive.simplestorage.setup.Registration;
 import vapourdrive.vapourware.shared.base.AbstractBaseContainerMenu;
 
-import java.util.Objects;
-
 public class CrateMenu extends AbstractBaseContainerMenu {
     // gui position of the player inventory grid
-    private static final int[] P_INV_X = {8,8,35};
-    private static final int[] P_INV_Y = {84,140,158};
-    private static final int[] INV_X = {8,8,8};
-    private static final int[] INV_Y = {17,18,18};
+    private static final int[] P_INV_X = {8,8,8,17,34};
+    private static final int[] P_INV_Y = {86,122,158,158,158};
+    private static final int[] INV_X = {17,17,17,8,8};
+    private static final int[] INV_Y = {8,8,8,8,8};
 
     private final int tier;
 
@@ -70,7 +65,7 @@ public class CrateMenu extends AbstractBaseContainerMenu {
     }
 
     @Override
-    protected void clearContainer(Player player, @NotNull Container container) {
+    protected void clearContainer(@NotNull Player player, @NotNull Container container) {
         super.clearContainer(player, container);
         tryToCloseCrate();
 
@@ -85,7 +80,7 @@ public class CrateMenu extends AbstractBaseContainerMenu {
             BlockPos pos = this.tileEntity.getBlockPos();
             crateTile.removeListener();
             if(!crateTile.hasListeners()) {
-                this.world.scheduleTick(pos, this.world.getBlockState(pos).getBlock(), this.world.getRandom().nextInt(5) + 5);
+                this.world.scheduleTick(pos, this.world.getBlockState(pos).getBlock(), this.world.getRandom().nextInt(3) + 4);
             }
         }
     }

@@ -1,9 +1,11 @@
 {
-  "simplestorage.crate": "Storage Crate",
   "block.simplestorage.crate": "Storage Crate",
-  "item.simplestorage.crate": "Storage Crate",
-  "item.simplestorage.crate_lg": "Large Storage Crate",
-  "item.simplestorage.crate_xl": "Resonant Storage Crate",
-  "block.simplestorage.crate_lg": "Large Storage Crate",
-  "block.simplestorage.crate_xl": "Resonant Storage Crate"
+  "simplestorage.crate": "Storage Crate",
+  "simplestorage.crate.tier": "Storage Crate - Tier %s",
+  "simplestorage.crate.info": "Upgradable storage.\nRandomly selects a variant upon placement (can be changed).\nConfigurable to keep inventory on disassembly",
+  "simplestorage.crate.wrench": "Let-click with a wrench to disassemble.\nSneak-Right-click with a wrench with a Storage Compartment in your off-hand to install\nSneak-Right-click with wrench to cycle variants.",
+  "simplestorage.tier": "Tier %d",
+  "simplestorage.blessed": "Blessed (will retain items)",
+  "item.simplestorage.storage_compartment": "Storage Compartment",
+  "config.jade.plugin_simplestorage.crate": "Simple Storage Crate Jade Plugin"
 }

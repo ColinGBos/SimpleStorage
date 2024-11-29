@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "tier=0,open=false": {
+      "model": "simplestorage:block/crate_0_alt_closed"
+    },
+    "tier=0,open=true": {
+      "model": "simplestorage:block/crate_0_alt_open"
+    },
+    "tier=1,open=false": {
+      "model": "simplestorage:block/crate_1_closed"
+    },
+    "tier=1,open=true": {
+      "model": "simplestorage:block/crate_1_open"
+    },
+    "tier=2,open=false": {
+      "model": "simplestorage:block/crate_2_closed"
+    },
+    "tier=2,open=true": {
+      "model": "simplestorage:block/crate_2_open"
+    }
+  }
+}
