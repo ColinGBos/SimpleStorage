@@ -33,13 +33,10 @@ import vapourdrive.vapourware.VapourWare;
 import vapourdrive.vapourware.shared.base.AbstractBaseContainerBlock;
 import vapourdrive.vapourware.shared.utils.InvUtils;
 import vapourdrive.vapourware.shared.utils.WeightedRandom;
-
 import javax.annotation.Nullable;
 import java.util.Map;
 
-
 public class CrateBlock extends AbstractBaseContainerBlock {
-
     public static final MapCodec<CrateBlock> CODEC = simpleCodec(CrateBlock::new);
     static Map<Integer, Double> variantWeights = Map.ofEntries(
             Map.entry(0, 0.4),
