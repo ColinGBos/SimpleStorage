@@ -3,9 +3,18 @@
   "simplestorage.crate": "Storage Crate",
   "simplestorage.crate.tier": "Storage Crate - Tier %s",
   "simplestorage.crate.info": "Upgradable storage.\nRandomly selects a variant upon placement (can be changed).\nConfigurable to keep inventory on disassembly",
-  "simplestorage.crate.wrench": "Let-click with a wrench to disassemble.\nSneak-Right-click with a wrench with a Storage Compartment in your off-hand to install\nSneak-Right-click with wrench to cycle variants.",
+  "simplestorage.crate.wrench": "Left-click with a wrench to disassemble.\nSneak-Right-click with a wrench with an upgrade in your off-hand to install\nSneak-Right-click with wrench to cycle variants.",
   "simplestorage.tier": "Tier %d",
-  "simplestorage.blessed": "Blessed (will retain items)",
+  "simplestorage.warded": "Warded",
+  "simplestorage.warded_full": "Warded (will retain items)",
   "item.simplestorage.storage_compartment": "Storage Compartment",
-  "config.jade.plugin_simplestorage.crate": "Simple Storage Crate Jade Plugin"
+  "item.simplestorage.warding_charm": "Warding Charm",
+  "simplestorage.warding_charm.info": "Crate Upgrade for keeping inventory when disassembled",
+  "simplestorage.storage_compartment.info": "Crate Storage Upgrade (+16 slots)",
+  "config.jade.plugin_simplestorage.crate": "Simple Storage Crate Jade Plugin",
+  "simplestorage.sort_tooltip": "Sort Crate",
+  "simplestorage.take_all_toolip": "Take All",
+  "simplestorage.take_matching_toolip": "Take Matching",
+  "simplestorage.deposit_all_toolip": "Deposit All",
+  "simplestorage.deposit_matching_toolip": "Deposit Matching"
 }

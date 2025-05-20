@@ -55,12 +55,9 @@ public class CrateItem extends BaseInfoItemBlock {
             int tier = stack.getOrDefault(Registration.TIER_DATA, 0);
             int variant = stack.getOrDefault(Registration.VARIANT_DATA, 0);
             if(variant==5){
-                crate.setBlessed(true);
-            } else {
-                boolean isBlessed = state.getValue(CrateBlock.VARIANT)==5;
-                if(isBlessed){
-                    crate.setBlessed(true);
-                }
+                crate.setWardedStatus(true);
+            } else if(state.getValue(CrateBlock.VARIANT)==5){
+                crate.setWardedStatus(true);
             }
 //            state.setValue(CrateBlock.TIER, tier);
             crate.setTier(tier);

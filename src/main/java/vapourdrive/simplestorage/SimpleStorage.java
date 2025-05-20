@@ -21,6 +21,7 @@ public class SimpleStorage {
         IEventBus eventBus = container.getEventBus();
 //        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigSettings.CLIENT_CONFIG);
         container.registerConfig(ModConfig.Type.SERVER, ConfigSettings.SERVER_CONFIG);
+        container.registerConfig(ModConfig.Type.CLIENT, ConfigSettings.CLIENT_CONFIG);
 
         Registration.init(container.getEventBus());
 
@@ -28,6 +29,7 @@ public class SimpleStorage {
         assert eventBus != null;
         eventBus.addListener(Registration::buildContents);
         eventBus.addListener(Registration::registerCapabilities);
+//        eventBus.addListener(Network::registerPayloadHandlers);
     }
 
     public static void debugLog(String toLog) {

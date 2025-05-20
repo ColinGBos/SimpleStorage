@@ -52,6 +52,6 @@ side = "BOTH"
 [[dependencies.simplestorage]]
 modId = "vapourware"
 mandatory = true
-versionRange = "[0.1.24,)"
+versionRange = "[${vapourware_version},)"
 ordering = "AFTER"
 side = "BOTH"

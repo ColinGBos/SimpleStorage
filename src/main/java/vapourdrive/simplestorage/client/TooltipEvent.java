@@ -7,7 +7,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import vapourdrive.simplestorage.SimpleStorage;
 
-import java.util.Arrays;
 import java.util.List;
 
 @EventBusSubscriber(modid = SimpleStorage.MODID)
@@ -17,7 +16,11 @@ public class TooltipEvent {
         if (SimpleStorage.isDebugMode()) {
             List<Component> tips = event.getToolTip();
             ItemStack stack = event.getItemStack();
-            tips.add(Component.literal(Arrays.toString(stack.getTags().toArray())));
+//            tips.add(Component.literal(Arrays.toString(stack.getTags().toArray())));
+            String ret = stack.getDescriptionId().replaceAll("item.", "");
+            ret = stack.getDescriptionId().replaceAll("block.", "");
+
+            tips.add(Component.literal(ret));
         }
     }
 }

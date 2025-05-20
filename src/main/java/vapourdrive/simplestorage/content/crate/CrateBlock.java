@@ -16,7 +16,9 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -33,6 +35,7 @@ import vapourdrive.vapourware.VapourWare;
 import vapourdrive.vapourware.shared.base.AbstractBaseContainerBlock;
 import vapourdrive.vapourware.shared.utils.InvUtils;
 import vapourdrive.vapourware.shared.utils.WeightedRandom;
+
 import javax.annotation.Nullable;
 import java.util.Map;
 
@@ -84,15 +87,16 @@ public class CrateBlock extends AbstractBaseContainerBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-        if (level.isClientSide()) {
-            return null;
-        } else {
-            return (level1, pos, state1, tile) -> {
-                if (tile instanceof CrateTile machine) {
-                    machine.tickServer(state1);
-                }
-            };
-        }
+//        if (level.isClientSide()) {
+//            return null;
+//        } else {
+//            return (level1, pos, state1, tile) -> {
+//                if (tile instanceof CrateTile machine) {
+//                    machine.tickServer(state1);
+//                }
+//            };
+//        }
+        return null;
     }
 
     @Override
@@ -112,12 +116,17 @@ public class CrateBlock extends AbstractBaseContainerBlock {
     public void onRemove(BlockState state, @NotNull Level world, @NotNull BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tileEntity = world.getBlockEntity(blockPos);
-            if (tileEntity instanceof CrateTile crate && !crate.getBlessed()) {
-                dropContents(world, blockPos, crate.getItemHandler(null));
-                int tier = crate.getTier();
-                if(tier > 0) {
-                    Containers.dropItemStack(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(Registration.STORAGE_COMPARTMENT_ITEM.get(), tier));
-                }
+            if (tileEntity instanceof CrateTile crate) {
+//                if(!crate.getIsWarded()) {
+                    dropContents(world, blockPos, crate.getItemHandler(null));
+                    int tier = crate.getTier();
+                    if(tier > 0) {
+                        Containers.dropItemStack(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(Registration.STORAGE_COMPARTMENT_ITEM.get(), tier));
+                    }
+                    if(crate.getIsWarded()){
+                        Containers.dropItemStack(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(Registration.WARDING_CHARM_ITEM.get(), 1));
+                    }
+//                }
             }
             super.onRemove(state, world, blockPos, newState, isMoving);
         }
@@ -136,6 +145,11 @@ public class CrateBlock extends AbstractBaseContainerBlock {
                     for (int i = 0; i < stacks.size(); i++) {
                         crate.getItemHandler(null).insertItem(i, stacks.get(i), false);
                     }
+                }
+            } else if (player.getOffhandItem().is(Registration.WARDING_CHARM_ITEM.get())) {
+                if(!crate.getIsWarded()){
+                    crate.setWardedStatus(true);
+                    player.getOffhandItem().consume(1, player);
                 }
             } else {
                 BlockState state = level.getBlockState(pos);
@@ -159,19 +173,24 @@ public class CrateBlock extends AbstractBaseContainerBlock {
 
     @Override
     public BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
-        int tier = context.getItemInHand().getOrDefault(Registration.TIER_DATA,0);
-        int variant;
-        if(context.getItemInHand().has(Registration.VARIANT_DATA)) {
-            variant = context.getItemInHand().getOrDefault(Registration.VARIANT_DATA, 0);
-        } else {
-            variant = numberGenerator.nextRandomItem();
-        }
-        return this.defaultBlockState().setValue(OPEN, false).setValue(TIER, tier).setValue(VARIANT, variant);
+//        if (!context.getLevel().isClientSide()) {
+            int tier = context.getItemInHand().getOrDefault(Registration.TIER_DATA, 0);
+            int variant;
+            if (context.getItemInHand().has(Registration.VARIANT_DATA)) {
+                variant = context.getItemInHand().getOrDefault(Registration.VARIANT_DATA, 0);
+                return this.defaultBlockState().setValue(OPEN, false).setValue(TIER, tier).setValue(VARIANT, variant);
+            } else if (!context.getLevel().isClientSide()) {
+                variant = numberGenerator.nextRandomItem();
+//              we only set this on the server so there isn't an issue with the client and the server generating a different variant
+                return this.defaultBlockState().setValue(OPEN, false).setValue(TIER, tier).setValue(VARIANT, variant);
+            }
+            return this.defaultBlockState().setValue(OPEN, false).setValue(TIER, tier);
+//        }
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(TIER).add(OPEN).add(VARIANT);
+        pBuilder.add(TIER, OPEN, VARIANT);
     }
 
     @Override
@@ -189,7 +208,7 @@ public class CrateBlock extends AbstractBaseContainerBlock {
         if (blockEntity instanceof CrateTile crateTile) {
             stack.set(Registration.TIER_DATA, crateTile.getTier());
             stack.set(Registration.VARIANT_DATA, crateTile.getVariant());
-            if(crateTile.getBlessed()) {
+            if(crateTile.getIsWarded()) {
                 stack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(InvUtils.getIngredientsFromInvHandler(crateTile.getItemHandler(null))));
             }
 //            stack.set(Registration.INV_DATA, crateTile.getItemHandler(null).se);

@@ -9,8 +9,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import vapourdrive.simplestorage.SimpleStorage;
+import vapourdrive.simplestorage.network.Network;
 import vapourdrive.simplestorage.setup.Registration;
 import vapourdrive.vapourware.shared.base.AbstractBaseContainerMenu;
 
@@ -57,6 +59,15 @@ public class CrateMenu extends AbstractBaseContainerMenu {
         return stillValid;
     }
 
+    public void invInteraction(int config) {
+        if(config == 0) {
+            PacketDistributor.sendToServer(new Network.SortNotification(this.tileEntity.getBlockPos(), 0));
+        } else {
+            PacketDistributor.sendToServer(new Network.TransferNotification(this.tileEntity.getBlockPos(), config-1));
+        }
+
+    }
+
     @Override
     public void removed(@NotNull Player player) {
         super.removed(player);
@@ -100,7 +111,7 @@ public class CrateMenu extends AbstractBaseContainerMenu {
             ItemStack stack = slot.getItem();
             itemstack = stack.copy();
 
-            //Furnace outputs to Inventory
+            //Crate to Player Inventory
             if (index >= 0 && index < getSize()) {
                 SimpleStorage.debugLog("From output");
                 if (!this.moveItemStackTo(stack, getSize(), getSize()+36, false)) {

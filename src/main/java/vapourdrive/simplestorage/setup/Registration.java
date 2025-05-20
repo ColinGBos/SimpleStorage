@@ -20,7 +20,10 @@ import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import vapourdrive.simplestorage.content.crate.*;
+import vapourdrive.simplestorage.content.crate.CrateBlock;
+import vapourdrive.simplestorage.content.crate.CrateItem;
+import vapourdrive.simplestorage.content.crate.CrateMenu;
+import vapourdrive.simplestorage.content.crate.CrateTile;
 import vapourdrive.vapourware.VapourWare;
 import vapourdrive.vapourware.shared.base.BaseInfoItem;
 import vapourdrive.vapourware.shared.utils.DeferredComponent;
@@ -46,7 +49,9 @@ public class Registration {
     public static final Supplier<Block> CRATE_BLOCK = BLOCKS.register("crate", () -> new CrateBlock());
     public static final Supplier<Item> CRATE_ITEM = ITEMS.register("crate", () -> new CrateItem(CRATE_BLOCK.get(), new Item.Properties()));
     public static final Supplier<Item> STORAGE_COMPARTMENT_ITEM = ITEMS.register("storage_compartment",
-            () -> new BaseInfoItem(new Item.Properties(), new DeferredComponent("storage_compartment")));
+            () -> new BaseInfoItem(new Item.Properties(), new DeferredComponent(MODID,"storage_compartment.info")));
+    public static final Supplier<Item> WARDING_CHARM_ITEM = ITEMS.register("warding_charm",
+            () -> new BaseInfoItem(new Item.Properties(), new DeferredComponent(MODID,"warding_charm.info")));
 
     @SuppressWarnings("all")
     public static final Supplier<BlockEntityType<CrateTile>> CRATE_BLOCK_ENTITY = TILES.register("crate",
@@ -83,6 +88,7 @@ public class Registration {
         if (event.getTab() == vapourdrive.vapourware.setup.Registration.VAPOUR_GROUP.get() || event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(CRATE_ITEM.get().getDefaultInstance());
             event.accept(STORAGE_COMPARTMENT_ITEM.get().getDefaultInstance());
+            event.accept(WARDING_CHARM_ITEM.get().getDefaultInstance());
         }
     }
 
