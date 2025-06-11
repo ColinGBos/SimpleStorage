@@ -8,11 +8,6 @@ import snownee.jade.api.WailaPlugin;
 import vapourdrive.simplestorage.SimpleStorage;
 import vapourdrive.simplestorage.content.crate.CrateBlock;
 import vapourdrive.simplestorage.content.crate.CrateTile;
-import vapourdrive.simplestorage.setup.Registration;
-import vapourdrive.vapourware.VapourWare;
-import vapourdrive.vapourware.shared.base.AbstractBaseFuelUserTile;
-import vapourdrive.vapourware.shared.base.AbstractBaseMachineBlock;
-import vapourdrive.vapourware.shared.integrations.jade.IFuelUserContentProvider;
 
 @WailaPlugin
 public class JadePlugin implements IWailaPlugin {

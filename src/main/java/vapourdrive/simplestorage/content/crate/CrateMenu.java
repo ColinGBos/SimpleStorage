@@ -126,20 +126,20 @@ public class CrateMenu extends AbstractBaseContainerMenu {
                     return ItemStack.EMPTY;
                 }
 
-                //Inventory to hotbar
-                if (index < getSize()+37) {
-                    SimpleStorage.debugLog("From Player inventory to hotbar");
-                    if (!this.moveItemStackTo(stack, 64, 72, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                }
-                //Hotbar to inventory
-                else {
-                    SimpleStorage.debugLog("From Hotbar to inventory");
-                    if (!this.moveItemStackTo(stack, getSize()+1, getSize()+36, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                }
+//                //Inventory to hotbar
+//                if (index < getSize()+37) {
+//                    SimpleStorage.debugLog("From Player inventory to hotbar");
+//                    if (!this.moveItemStackTo(stack, 64, 72, false)) {
+//                        return ItemStack.EMPTY;
+//                    }
+//                }
+//                //Hotbar to inventory
+//                else {
+//                    SimpleStorage.debugLog("From Hotbar to inventory");
+//                    if (!this.moveItemStackTo(stack, getSize()+1, getSize()+36, false)) {
+//                        return ItemStack.EMPTY;
+//                    }
+//                }
             }
 
             if (stack.isEmpty()) {

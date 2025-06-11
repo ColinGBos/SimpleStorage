@@ -54,7 +54,8 @@ public class CrateScreen extends AbstractBaseContainerScreen<CrateMenu> {
     }
 
     protected void init() {
-        super.init();
+        this.leftPos = (this.width - imgWidths[crateMenu.getTier()]) / 2;
+        this.topPos = (this.height - imgHeights[crateMenu.getTier()]) / 2;
         if(ConfigSettings.ENABLE_BUTTONS.get()) {
             int xPos = (this.width - this.getXSize()) / 2 + INFO_XPOS + 13;
             int yPos = (this.height - this.getYSize()) / 2 + 1;
@@ -74,12 +75,12 @@ public class CrateScreen extends AbstractBaseContainerScreen<CrateMenu> {
 
     @Override
     public int getYSize() {
-        return imgHeights[menu.getTier()];
+        return imgHeights[crateMenu.getTier()];
     }
 
     @Override
     public int getXSize() {
-        return imgWidths[menu.getTier()]+10;
+        return imgWidths[crateMenu.getTier()];
     }
 
     @Override
