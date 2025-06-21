@@ -32,8 +32,8 @@ import static vapourdrive.simplestorage.setup.Registration.CRATE_BLOCK_ENTITY;
 
 public class CrateTile extends BlockEntity implements MenuProvider {
 
-    public static final int[] COLUMNS_BY_TIER = {8,8,8,10,12};
-    public static final int[] ROWS_BY_TIER = {4,6,8,8,8};
+    public static final int[] COLUMNS_BY_TIER = {9,9,9,9,9};
+    public static final int[] ROWS_BY_TIER = {3,4,5,6,7};
     private int tier;
     private int listeners = 0;
     private boolean warded = false;
