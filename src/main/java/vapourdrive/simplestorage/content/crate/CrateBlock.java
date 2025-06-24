@@ -7,7 +7,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +26,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -34,22 +35,13 @@ import vapourdrive.simplestorage.setup.Registration;
 import vapourdrive.vapourware.VapourWare;
 import vapourdrive.vapourware.shared.base.AbstractBaseContainerBlock;
 import vapourdrive.vapourware.shared.utils.InvUtils;
-import vapourdrive.vapourware.shared.utils.WeightedRandom;
 
 import javax.annotation.Nullable;
-import java.util.Map;
+import java.util.List;
 
 public class CrateBlock extends AbstractBaseContainerBlock {
     public static final MapCodec<CrateBlock> CODEC = simpleCodec(CrateBlock::new);
-    static Map<Integer, Double> variantWeights = Map.ofEntries(
-            Map.entry(0, 0.4),
-            Map.entry(1, 0.6),
-            Map.entry(2, 1.0),
-            Map.entry(3, 0.4),
-            Map.entry(4, 0.6),
-            Map.entry(5, 0.05)
-    );
-    public static final WeightedRandom<Integer> numberGenerator = new WeightedRandom<>(variantWeights);
+
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final IntegerProperty TIER = IntegerProperty.create("tier", 0, 4);
     public static final IntegerProperty VARIANT = IntegerProperty.create("variant", 0, 5);
@@ -78,7 +70,7 @@ public class CrateBlock extends AbstractBaseContainerBlock {
     public void attack(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof CrateTile crateTile){
-            VapourWare.debugLog("Blockstate tier: "+state.getValue(TIER)+", "+crateTile.getTier());
+            VapourWare.debugLog("Variant: "+crateTile.getVariant()+", Tier: "+crateTile.getTier());
         }
 
         super.attack(state, level, pos, player);
@@ -87,15 +79,6 @@ public class CrateBlock extends AbstractBaseContainerBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-//        if (level.isClientSide()) {
-//            return null;
-//        } else {
-//            return (level1, pos, state1, tile) -> {
-//                if (tile instanceof CrateTile machine) {
-//                    machine.tickServer(state1);
-//                }
-//            };
-//        }
         return null;
     }
 
@@ -113,21 +96,31 @@ public class CrateBlock extends AbstractBaseContainerBlock {
     }
 
     @Override
+    protected @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootParams.Builder builder) {
+        List<ItemStack> drops = super.getDrops(state, builder); // Get default drops
+        BlockEntity blockEntity = builder.getParameter(LootContextParams.BLOCK_ENTITY);
+
+        if (blockEntity instanceof CrateTile crate) {
+            drops.clear();
+            ItemStack stack = new ItemStack(this);
+            stack.set(Registration.TIER_DATA, crate.getTier());
+            stack.set(Registration.VARIANT_DATA, crate.getVariant());
+            if(crate.getIsWarded()) {
+                stack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(InvUtils.getIngredientsFromInvHandler(crate.getItemHandler(null))));
+            } else {
+                for (int i = 0; i< crate.getContainerSize(); i++){
+                    drops.add(crate.getItemHandler(null).getStackInSlot(i));
+                }
+            }
+            drops.add(stack);
+        }
+
+        return drops;
+    }
+
+    @Override
     public void onRemove(BlockState state, @NotNull Level world, @NotNull BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
-            BlockEntity tileEntity = world.getBlockEntity(blockPos);
-            if (tileEntity instanceof CrateTile crate) {
-//                if(!crate.getIsWarded()) {
-                    dropContents(world, blockPos, crate.getItemHandler(null));
-                    int tier = crate.getTier();
-                    if(tier > 0) {
-                        Containers.dropItemStack(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(Registration.STORAGE_COMPARTMENT_ITEM.get(), tier));
-                    }
-                    if(crate.getIsWarded()){
-                        Containers.dropItemStack(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), new ItemStack(Registration.WARDING_CHARM_ITEM.get(), 1));
-                    }
-//                }
-            }
             super.onRemove(state, world, blockPos, newState, isMoving);
         }
     }
@@ -179,11 +172,11 @@ public class CrateBlock extends AbstractBaseContainerBlock {
             if (context.getItemInHand().has(Registration.VARIANT_DATA)) {
                 variant = context.getItemInHand().getOrDefault(Registration.VARIANT_DATA, 0);
                 return this.defaultBlockState().setValue(OPEN, false).setValue(TIER, tier).setValue(VARIANT, variant);
-            } else if (!context.getLevel().isClientSide()) {
-                variant = numberGenerator.nextRandomItem();
-//              we only set this on the server so there isn't an issue with the client and the server generating a different variant
-                return this.defaultBlockState().setValue(OPEN, false).setValue(TIER, tier).setValue(VARIANT, variant);
             }
+//            else if (!context.getLevel().isClientSide()) {
+////              we only set this on the server so there isn't an issue with the client and the server generating a different variant
+//                return this.defaultBlockState().setValue(OPEN, false).setValue(TIER, tier).setValue(VARIANT, variant);
+//            }
             return this.defaultBlockState().setValue(OPEN, false).setValue(TIER, tier);
 //        }
     }

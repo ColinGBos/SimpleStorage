@@ -32,9 +32,10 @@ import static vapourdrive.simplestorage.setup.Registration.CRATE_BLOCK_ENTITY;
 
 public class CrateTile extends BlockEntity implements MenuProvider {
 
-    public static final int[] COLUMNS_BY_TIER = {8,8,8,10,12};
-    public static final int[] ROWS_BY_TIER = {4,6,8,8,8};
+    public static final int[] COLUMNS_BY_TIER = {9,9,9,9,9};
+    public static final int[] ROWS_BY_TIER = {3,4,5,6,7};
     private int tier;
+    private int variant;
     private int listeners = 0;
     private boolean warded = false;
 
@@ -43,6 +44,7 @@ public class CrateTile extends BlockEntity implements MenuProvider {
     public CrateTile(BlockPos pos, BlockState state) {
         super(CRATE_BLOCK_ENTITY.get(), pos, state);
         setTier(state.getValue(CrateBlock.TIER));
+        setVariant(state.getValue(CrateBlock.VARIANT));
 //        SimpleStorage.debugLog("Creating tile without tier");
     }
 
@@ -51,6 +53,7 @@ public class CrateTile extends BlockEntity implements MenuProvider {
     public void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
         super.loadAdditional(tag, registries);
         setTier(tag.getInt("tier"));
+        setVariant(tag.getInt("variant"));
         setWardedStatus(tag.getBoolean("warded"));
         invHandler.deserializeNBT(registries, tag.getCompound("inv"));
 
@@ -60,6 +63,7 @@ public class CrateTile extends BlockEntity implements MenuProvider {
     public void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putInt("tier", getTier());
+        tag.putInt("variant", getVariant());
         tag.put("inv", invHandler.serializeNBT(registries));
         tag.putBoolean("warded", getIsWarded());
     }
@@ -87,8 +91,11 @@ public class CrateTile extends BlockEntity implements MenuProvider {
     }
 
     public int getVariant() {
-        assert this.level != null;
-        return this.level.getBlockState(this.worldPosition).getValue(CrateBlock.VARIANT);
+        return variant;
+    }
+
+    public void setVariant(int i) {
+        this.variant = i;
     }
 
     public void setTier(int tier) {

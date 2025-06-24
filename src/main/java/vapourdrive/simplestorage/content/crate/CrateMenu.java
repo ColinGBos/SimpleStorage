@@ -18,11 +18,6 @@ import vapourdrive.vapourware.shared.base.AbstractBaseContainerMenu;
 
 public class CrateMenu extends AbstractBaseContainerMenu {
     // gui position of the player inventory grid
-    private static final int[] P_INV_X = {8,8,8,17,34};
-    private static final int[] P_INV_Y = {86,122,158,158,158};
-    private static final int[] INV_X = {17,17,17,8,8};
-    private static final int[] INV_Y = {8,8,8,8,8};
-
     private final int tier;
 
     public CrateMenu(int windowId, Level world, BlockPos pos, Inventory inv, Player player, int tier) {
@@ -36,12 +31,12 @@ public class CrateMenu extends AbstractBaseContainerMenu {
             int index = 0;
             for (int j = 0; j< CrateTile.ROWS_BY_TIER[tier]; j++){
                 for (int i = 0; i< CrateTile.COLUMNS_BY_TIER[tier]; i++){
-                    addSlot(new SlotItemHandler(handler, index, INV_X[tier]+i*18, INV_Y[tier]+j*18));
+                    addSlot(new SlotItemHandler(handler, index, 8+i*18, 8+j*18));
                     index++;
                 }
             }
         }
-        layoutPlayerInventorySlots(P_INV_X[tier], P_INV_Y[tier]);
+        layoutPlayerInventorySlots(8, 68+(18*tier));
         //We use this vs the builtin method because we split all the shorts
     }
 

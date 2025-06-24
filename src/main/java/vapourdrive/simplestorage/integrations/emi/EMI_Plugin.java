@@ -14,7 +14,7 @@ public class EMI_Plugin implements EmiPlugin {
         registry.addExclusionArea(CrateScreen.class, (screen, consumer) -> {
             int left = screen.getGuiLeft()-10;
             int top = screen.getGuiTop()-10;
-            int width = (int)(screen.getXSize()*1.1)+20;
+            int width = (int)(screen.getXSize()*1.1)+10;
             int height = screen.getYSize()+20;
             consumer.accept(new Bounds(left, top, width, height));
         });

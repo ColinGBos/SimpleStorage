@@ -17,10 +17,7 @@ import java.util.List;
 
 public class CrateScreen extends AbstractBaseContainerScreen<CrateMenu> {
     protected final CrateMenu crateMenu;
-    private static final int[] imgWidths = {176,176,176,194,230};
-    private static final int[] helpX = {154,154,154,181,217};
-    private static final int[] titleX = {9,9,9,0,0};
-    private static final int[] imgHeights = {175,211,247,247,247};
+    private static final int[] imgHeights = {150,166,184,202,220};
     protected final Button sortButton_alpha;
     protected final Button transferAllToPlayer;
     protected final Button transferMatchingToPlayer;
@@ -28,7 +25,7 @@ public class CrateScreen extends AbstractBaseContainerScreen<CrateMenu> {
     protected final Button transferMatchingToCrate;
 
     public CrateScreen(CrateMenu menu, Inventory inv, Component name) {
-        super(menu, inv, name, new DeferredComponent(SimpleStorage.MODID, "crate_"+menu.getTier()), helpX[menu.getTier()], -14,244,0, titleX[menu.getTier()], false);
+        super(menu, inv, name, new DeferredComponent(SimpleStorage.MODID, "crate_"+menu.getTier()), 162, -13,244,0, 0, false);
         this.crateMenu = menu;
         SimpleStorage.debugLog("Info x"+ this.INFO_XPOS + " Info y"+ this.INFO_YPOS);
         this.sortButton_alpha = Button.builder(Component.literal("☰"), b -> this.crateMenu.invInteraction(0))
@@ -54,10 +51,10 @@ public class CrateScreen extends AbstractBaseContainerScreen<CrateMenu> {
     }
 
     protected void init() {
-        this.leftPos = (this.width - imgWidths[crateMenu.getTier()]) / 2;
+        this.leftPos = (this.width - 176) / 2;
         this.topPos = (this.height - imgHeights[crateMenu.getTier()]) / 2;
         if(ConfigSettings.ENABLE_BUTTONS.get()) {
-            int xPos = (this.width - this.getXSize()) / 2 + INFO_XPOS + 13;
+            int xPos = (this.width/2) + 88;
             int yPos = (this.height - this.getYSize()) / 2 + 1;
             int spacing = 15;
             this.sortButton_alpha.setPosition(xPos, yPos);
@@ -80,7 +77,7 @@ public class CrateScreen extends AbstractBaseContainerScreen<CrateMenu> {
 
     @Override
     public int getXSize() {
-        return imgWidths[crateMenu.getTier()];
+        return 176;
     }
 
     @Override
