@@ -1,5 +1,6 @@
 package vapourdrive.simplestorage.setup;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -9,6 +10,9 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RepairItemRecipe;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -24,6 +28,7 @@ import vapourdrive.simplestorage.content.crate.CrateBlock;
 import vapourdrive.simplestorage.content.crate.CrateItem;
 import vapourdrive.simplestorage.content.crate.CrateMenu;
 import vapourdrive.simplestorage.content.crate.CrateTile;
+import vapourdrive.simplestorage.data.recipes.CrateRecipe;
 import vapourdrive.vapourware.VapourWare;
 import vapourdrive.vapourware.shared.base.BaseInfoItem;
 import vapourdrive.vapourware.shared.utils.DeferredComponent;
@@ -33,6 +38,8 @@ import java.util.function.Supplier;
 import static vapourdrive.simplestorage.SimpleStorage.MODID;
 
 public class Registration {
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, MODID);
+    public static final Supplier<RecipeSerializer<CrateRecipe>> CRATE_RECIPE_SERIALIZER = RECIPE_SERIALIZERS.register("crate",() -> new SimpleCraftingRecipeSerializer<>(CrateRecipe::new));
     public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, VapourWare.MODID);
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> TIER_DATA = DATA_COMPONENTS.registerComponentType(
             "tier", builder -> builder.persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT)
@@ -47,7 +54,7 @@ public class Registration {
     private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(BuiltInRegistries.MENU, MODID);
 
     public static final Supplier<Block> CRATE_BLOCK = BLOCKS.register("crate", () -> new CrateBlock());
-    public static final Supplier<Item> CRATE_ITEM = ITEMS.register("crate", () -> new CrateItem(CRATE_BLOCK.get(), new Item.Properties()));
+    public static final Supplier<CrateItem> CRATE_ITEM = ITEMS.register("crate", () -> new CrateItem(CRATE_BLOCK.get(), new Item.Properties()));
     public static final Supplier<Item> STORAGE_COMPARTMENT_ITEM = ITEMS.register("storage_compartment",
             () -> new BaseInfoItem(new Item.Properties(), new DeferredComponent(MODID,"storage_compartment.info")));
     public static final Supplier<Item> WARDING_CHARM_ITEM = ITEMS.register("warding_charm",
@@ -81,6 +88,7 @@ public class Registration {
         TILES.register(eventBus);
         MENUS.register(eventBus);
         DATA_COMPONENTS.register(eventBus);
+        RECIPE_SERIALIZERS.register(eventBus);
     }
 
     public static void buildContents(BuildCreativeModeTabContentsEvent event) {
