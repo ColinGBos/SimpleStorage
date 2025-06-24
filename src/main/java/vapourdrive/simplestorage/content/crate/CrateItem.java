@@ -19,7 +19,6 @@ import org.jetbrains.annotations.NotNull;
 import vapourdrive.simplestorage.SimpleStorage;
 import vapourdrive.simplestorage.setup.Registration;
 import vapourdrive.vapourware.shared.base.BaseInfoItemBlock;
-import vapourdrive.vapourware.shared.utils.CompUtils;
 import vapourdrive.vapourware.shared.utils.DeferredComponent;
 import vapourdrive.vapourware.shared.utils.WeightedRandom;
 
