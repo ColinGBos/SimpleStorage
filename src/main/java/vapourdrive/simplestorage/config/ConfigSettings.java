@@ -10,6 +10,7 @@ public class ConfigSettings {
     public static final ModConfigSpec CLIENT_CONFIG;
     public static final String SUBCATEGORY_CRATE = "crate";
     public static ModConfigSpec.BooleanValue ENABLE_CRATE;
+    public static ModConfigSpec.BooleanValue ENABLE_CHEST_SWAP;
     public static ModConfigSpec.BooleanValue ENABLE_BUTTONS;
 //    public static ModConfigSpec.IntValue PRIMITIVE_QUARRY_FUEL_TO_WORK;
 //    public static ModConfigSpec.IntValue PRIMITIVE_QUARRY_PROCESS_TIME;
@@ -36,6 +37,7 @@ public class ConfigSettings {
     private static void setupFirstBlockConfig(ModConfigSpec.Builder SERVER_BUILDER, ModConfigSpec.Builder CLIENT_BUILDER) {
         SERVER_BUILDER.comment("Crate Settings").push(SUBCATEGORY_CRATE);
         ENABLE_CRATE = SERVER_BUILDER.comment("Is the Crate Enabled").define("enableCrate", true);
+        ENABLE_CHEST_SWAP = SERVER_BUILDER.comment("Can a crate swap a chest in place? (Sneak click chest to replace with inventory)").define("enableChestSwap", true);
         SERVER_BUILDER.pop();
 
         CLIENT_BUILDER.comment("Crate Settings").push(SUBCATEGORY_CRATE);

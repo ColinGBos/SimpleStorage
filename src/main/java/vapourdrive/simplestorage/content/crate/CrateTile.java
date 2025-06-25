@@ -74,7 +74,7 @@ public class CrateTile extends BlockEntity implements MenuProvider {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory, @NotNull Player player) {
-        return new CrateMenu(id, this.level, this.worldPosition, player.getInventory(), player, tier);
+        return new CrateMenu(id, this.level, this.worldPosition, player.getInventory(), player, this.getTier());
     }
 
     @Override
@@ -83,7 +83,7 @@ public class CrateTile extends BlockEntity implements MenuProvider {
     }
 
     public int getContainerSize() {
-        return COLUMNS_BY_TIER[tier]*ROWS_BY_TIER[tier];
+        return COLUMNS_BY_TIER[this.getTier()]*ROWS_BY_TIER[this.getTier()];
     }
 
     public int getTier() {
@@ -111,22 +111,26 @@ public class CrateTile extends BlockEntity implements MenuProvider {
 
     public void setWardedStatus(boolean isWarded) {
         this.warded = isWarded;
+        this.setChanged();
     }
 
     public boolean getIsWarded() {
         return this.warded;
     }
 
-    public void setTierAndState(int tier, Level level, BlockPos pos) {
-        level.setBlockAndUpdate(pos, level.getBlockState(pos).setValue(CrateBlock.TIER, tier));
+    public BlockState setTierAndState(int tier, Level level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos).setValue(CrateBlock.TIER, tier);
+        level.setBlockAndUpdate(pos, state);
         int newSize = COLUMNS_BY_TIER[tier]*ROWS_BY_TIER[tier];
         invHandler.setSize(newSize);
 //        NonNullList<ItemStack> stacks = NonNullList.withSize(newSize, ItemStack.EMPTY);
 //        for (int i=0;i<invHandler.getSlots();i++){
 //            stacks.set(i,invHandler.getStackInSlot(i).copy());
 //        }
-        this.tier = tier;
+        setTier(tier);
+        this.setChanged();
 //        this.invHandler = new ItemStackHandler(stacks);
+        return state;
     }
 
     public void sortContents() {

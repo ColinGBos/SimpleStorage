@@ -2,7 +2,6 @@ package vapourdrive.simplestorage.content.crate;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -78,7 +77,7 @@ public class CrateBlock extends AbstractBaseContainerBlock {
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         return null;
     }
 
@@ -96,7 +95,7 @@ public class CrateBlock extends AbstractBaseContainerBlock {
     }
 
     @Override
-    protected @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootParams.Builder builder) {
+    protected @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootParams.@NotNull Builder builder) {
         List<ItemStack> drops = super.getDrops(state, builder); // Get default drops
         BlockEntity blockEntity = builder.getParameter(LootContextParams.BLOCK_ENTITY);
 
@@ -128,33 +127,15 @@ public class CrateBlock extends AbstractBaseContainerBlock {
     @Override
     public boolean sneakWrenchMachine(Player player, Level level, BlockPos pos) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
-        if (tileEntity instanceof CrateTile crate) {
-            if(player.getOffhandItem().is(Registration.STORAGE_COMPARTMENT_ITEM.get())){
-                if(crate.getTier()<4) {
-                    int newTier = crate.getTier() + 1;
-                    player.getOffhandItem().consume(1, player);
-                    NonNullList<ItemStack> stacks = InvUtils.getIngredientsFromInvHandler(crate.getItemHandler(null));
-                    crate.setTierAndState(newTier, level, pos);
-                    for (int i = 0; i < stacks.size(); i++) {
-                        crate.getItemHandler(null).insertItem(i, stacks.get(i), false);
-                    }
-                }
-            } else if (player.getOffhandItem().is(Registration.WARDING_CHARM_ITEM.get())) {
-                if(!crate.getIsWarded()){
-                    crate.setWardedStatus(true);
-                    player.getOffhandItem().consume(1, player);
-                }
-            } else {
-                BlockState state = level.getBlockState(pos);
-                int variant = state.getValue(VARIANT);
-                if (variant == 4){
-                    variant = 0;
-                } else{
-                    variant++;
-                }
-                level.setBlockAndUpdate(pos, state.setValue(VARIANT, variant));
-//                dropContents(level, pos.above(), crate.getItemHandler(null));
+        if (tileEntity instanceof CrateTile) {
+            BlockState state = level.getBlockState(pos);
+            int variant = state.getValue(VARIANT);
+            if (variant == 4){
+                variant = 0;
+            } else{
+                variant++;
             }
+            level.setBlockAndUpdate(pos, state.setValue(VARIANT, variant));
         }
         return true;
     }
