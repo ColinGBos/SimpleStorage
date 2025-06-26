@@ -1,10 +1,13 @@
 package vapourdrive.simplestorage.integrations.jei;
 
+import dev.emi.emi.api.stack.EmiStack;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.registration.IExtraIngredientRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
@@ -16,6 +19,7 @@ import vapourdrive.simplestorage.SimpleStorage;
 import vapourdrive.simplestorage.setup.Registration;
 import vapourdrive.vapourware.shared.utils.DeferredComponent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JeiPlugin
@@ -28,15 +32,32 @@ public class JEI_Plugin implements IModPlugin {
     }
 
     @Override
-    public void registerRecipes(IRecipeRegistration registration) {
-//        registration.addIngredientInfo(new ItemStack(Registration.PRIMITIVE_QUARRY_ITEM.get()), VanillaTypes.ITEM_STACK, Component.translatable("primitivequarry.primitive_quarry.info"));
+    public void registerRecipes(IRecipeRegistration registry) {
+//        registry.addIngredientInfo(new ItemStack(Registration.PRIMITIVE_QUARRY_ITEM.get()), VanillaTypes.ITEM_STACK, Component.translatable("primitivequarry.primitive_quarry.info"));
         DeferredComponent comp = new DeferredComponent(SimpleStorage.MODID, "crate.info");
-        registration.addIngredientInfo(new ItemStack(Registration.CRATE_ITEM.get()), VanillaTypes.ITEM_STACK, comp.get());
-        addCrateUpgrade(0, registration);
-        addCrateUpgrade(1, registration);
-        addCrateUpgrade(2, registration);
-        addCrateUpgrade(3, registration);
-        addWardingUpgrade(registration);
+        registry.addIngredientInfo(new ItemStack(Registration.CRATE_ITEM.get()), VanillaTypes.ITEM_STACK, comp.get());
+        addCrateUpgrade(0, registry);
+        addCrateUpgrade(1, registry);
+        addCrateUpgrade(2, registry);
+        addCrateUpgrade(3, registry);
+        addWardingUpgrade(registry);
+
+    }
+
+    @Override
+    public void registerExtraIngredients(@NotNull IExtraIngredientRegistration registry) {
+        List<ItemStack> stacks = new ArrayList<>(List.of());
+        for(int i=1; i<5; i++){
+            ItemStack stack = new ItemStack(Registration.CRATE_ITEM.get());
+            stack.set(Registration.TIER_DATA, i);
+            stacks.add(stack);
+        }
+        for(int i=1; i<5; i++){
+            ItemStack stack = new ItemStack(Registration.CRATE_ITEM.get());
+            stack.set(Registration.VARIANT_DATA, i);
+            stacks.add(stack);
+        }
+        registry.addExtraItemStacks(stacks);
     }
 
     private void addCrateUpgrade(int inTier, IRecipeRegistration registry) {

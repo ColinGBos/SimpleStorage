@@ -170,7 +170,7 @@ public class CrateItem extends BaseInfoItemBlock {
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         MutableComponent tooltip = CompUtils.getArgComp(SimpleStorage.MODID,"tier", stack.getOrDefault(Registration.TIER_DATA, 0));
         if(stack.has(Registration.VARIANT_DATA)) {
-            tooltip.append(" | " + CompUtils.getArgComp(SimpleStorage.MODID, "variant",stack.getOrDefault(Registration.VARIANT_DATA, 0)));
+            tooltip.append(" | ").append(CompUtils.getArgComp(SimpleStorage.MODID, "variant",stack.getOrDefault(Registration.VARIANT_DATA, 0)));
         }
         boolean warded = stack.has(DataComponents.CONTAINER);
         if (warded){
@@ -180,7 +180,7 @@ public class CrateItem extends BaseInfoItemBlock {
 
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         if(ConfigSettings.ENABLE_CHEST_SWAP.get() && Screen.hasShiftDown()){
-            tooltipComponents.add(CompUtils.getComp(SimpleStorage.MODID, "crate.chest_swap"));
+            tooltipComponents.add(CompUtils.getComp(SimpleStorage.MODID, "crate.chest_swap").withStyle(ChatFormatting.GRAY));
         }
     }
 

@@ -35,6 +35,16 @@ public class EMI_Plugin implements EmiPlugin {
         addCrateUpgrade(2, registry);
         addCrateUpgrade(3, registry);
         addCrateWarding(registry);
+        for(int i=1; i<5; i++){
+            ItemStack stack = new ItemStack(Registration.CRATE_ITEM.get());
+            stack.set(Registration.TIER_DATA, i);
+            registry.addEmiStack(EmiStack.of(stack));
+        }
+        for(int i=1; i<5; i++){
+            ItemStack stack = new ItemStack(Registration.CRATE_ITEM.get());
+            stack.set(Registration.VARIANT_DATA, i);
+            registry.addEmiStack(EmiStack.of(stack));
+        }
     }
 
     private void addCrateUpgrade(int inTier, EmiRegistry registry) {
