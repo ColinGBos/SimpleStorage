@@ -14,6 +14,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -38,6 +40,8 @@ import vapourdrive.vapourware.shared.utils.InvUtils;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static net.minecraft.world.Containers.dropItemStack;
+
 public class CrateBlock extends AbstractBaseContainerBlock {
     public static final MapCodec<CrateBlock> CODEC = simpleCodec(CrateBlock::new);
 
@@ -47,7 +51,7 @@ public class CrateBlock extends AbstractBaseContainerBlock {
     protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 15.0, 15.0);
 
     public CrateBlock() {
-        super(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.SNARE));
+        super(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(3f,4f).mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.SNARE));
     }
 
     public CrateBlock(Properties properties) {
@@ -65,15 +69,15 @@ public class CrateBlock extends AbstractBaseContainerBlock {
         return SHAPE;
     }
 
-    @Override
-    public void attack(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof CrateTile crateTile){
-            VapourWare.debugLog("Variant: "+crateTile.getVariant()+", Tier: "+crateTile.getTier());
-        }
-
-        super.attack(state, level, pos, player);
-    }
+//    @Override
+//    public void attack(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player) {
+//        BlockEntity blockEntity = level.getBlockEntity(pos);
+//        if (blockEntity instanceof CrateTile crateTile){
+//            VapourWare.debugLog("Variant: "+crateTile.getVariant()+", Tier: "+crateTile.getTier());
+//        }
+//
+//        super.attack(state, level, pos, player);
+//    }
 
     @Nullable
     @Override
@@ -101,27 +105,34 @@ public class CrateBlock extends AbstractBaseContainerBlock {
 
         if (blockEntity instanceof CrateTile crate) {
             drops.clear();
-            ItemStack stack = new ItemStack(this);
-            stack.set(Registration.TIER_DATA, crate.getTier());
-            stack.set(Registration.VARIANT_DATA, crate.getVariant());
-            if(crate.getIsWarded()) {
-                stack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(InvUtils.getIngredientsFromInvHandler(crate.getItemHandler(null))));
-            } else {
+            ItemStack stack = putAdditionalInfo(new ItemStack(this), blockEntity);
+            drops.add(stack);
+            if(!crate.getIsWarded()) {
                 for (int i = 0; i< crate.getContainerSize(); i++){
                     drops.add(crate.getItemHandler(null).getStackInSlot(i));
                 }
             }
-            drops.add(stack);
         }
 
         return drops;
     }
 
     @Override
-    public void onRemove(BlockState state, @NotNull Level world, @NotNull BlockPos blockPos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
-            super.onRemove(state, world, blockPos, newState, isMoving);
+    public void disassemble(BlockState state, @NotNull Level level, @NotNull BlockPos blockPos) {
+        BlockEntity blockEntity = level.getBlockEntity(blockPos);
+        if (blockEntity instanceof CrateTile be) {
+            ItemStack self = putAdditionalInfo(new ItemStack(this), blockEntity);
+            dropItemStack(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), self);
+            if(!be.getIsWarded()) {
+                for (int i = 0; i < be.getItemHandler(null).getSlots(); i++) {
+                    dropItemStack(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), be.getItemHandler(null).getStackInSlot(i));
+                }
+            }
         }
+        onRemove(state, level, blockPos, Blocks.AIR.defaultBlockState(), false);
+        level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
+        VapourWare.debugLog("in th end of the disassembly");
+
     }
 
     @Override
@@ -179,6 +190,7 @@ public class CrateBlock extends AbstractBaseContainerBlock {
 
     @Override
     protected ItemStack putAdditionalInfo(ItemStack stack, BlockEntity blockEntity) {
+        super.putAdditionalInfo(stack, blockEntity);
         if (blockEntity instanceof CrateTile crateTile) {
             stack.set(Registration.TIER_DATA, crateTile.getTier());
             stack.set(Registration.VARIANT_DATA, crateTile.getVariant());

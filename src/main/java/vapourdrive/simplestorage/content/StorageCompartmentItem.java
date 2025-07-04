@@ -37,7 +37,7 @@ public class StorageCompartmentItem extends BaseInfoItem {
             if (tileEntity instanceof CrateTile crate) {
                 if (crate.getTier() < 4) {
                     NonNullList<ItemStack> stacks = InvUtils.getIngredientsFromInvHandler(crate.getItemHandler(null));
-                    level.playSound(player, pos, SoundEvents.WOOD_PLACE, SoundSource.BLOCKS, 1.0f,1f-(0.06f*(crate.getTier()+1)));
+                    level.playSound(player, pos, SoundEvents.WOOD_PLACE, SoundSource.BLOCKS, 0.8f,1f-(0.06f*(crate.getTier()+1)));
                     BlockState state = crate.setTierAndState(crate.getTier() + 1, level, pos);
                     level.sendBlockUpdated(pos, state,state,1);
                     for (int i = 0; i < stacks.size(); i++) {
